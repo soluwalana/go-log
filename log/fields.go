@@ -1,4 +1,5 @@
 package log
+
 // Copyright 2013, CoreOS, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,14 +31,16 @@ type Fields map[string]interface{}
 func (logger *Logger) fieldValues() Fields {
 	now := time.Now()
 	fields := Fields{
-		"prefix":     logger.prefix,               // static field available to all sinks
-		"seq":        logger.nextSeq(),            // auto-incrementing sequence number
-		"start_time": logger.created,              // start time of the logger
-		"time":       now.Format(time.StampMilli), // formatted time of log entry
-		"full_time":  now,                         // time of log entry
-		"rtime":      time.Since(logger.created),  // relative time of log entry since started
-		"pid":        os.Getpid(),                 // process id
-		"executable": logger.executable,           // executable filename
+		"prefix":            logger.prefix,               // static field available to all sinks
+		"seq":               logger.nextSeq(),            // auto-incrementing sequence number
+		"start_time":        logger.created,              // start time of the logger
+		"time":              now.Format(time.StampMilli), // formatted time of log entry
+		"full_time":         now,                         // time of log entry
+		"rtime":             time.Since(logger.created),  // relative time of log entry since started
+		"pid":               os.Getpid(),                 // process id
+		"executable":        logger.executable,           // executable filename
+		"SYSLOG_FACILITY":   17,                          // syslog facility
+		"SYSLOG_IDENTIFIER": logger.identifier,           // syslog id
 	}
 
 	if logger.verbose {

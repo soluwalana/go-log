@@ -1,4 +1,5 @@
 package log
+
 // Copyright 2013, CoreOS, Inc. All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +33,7 @@ type Logger struct {
 	created    time.Time // time when this logger was created
 	seq        uint64    // sequential number of log message, starting at 1
 	executable string    // executable name
+	identifier string    // Syslog Identifier
 }
 
 // New creates a new Logger which logs to all the supplied sinks.  The prefix
@@ -39,12 +41,12 @@ type Logger struct {
 // message.  If verbose is true, more expensive runtime fields will be computed
 // and passed to loggers.  These fields are funcname, lineno, pathname, and
 // filename.
-func New(prefix string, verbose bool, sinks ...Sink) *Logger {
+func New(prefix, identifier string, verbose bool, sinks ...Sink) *Logger {
 	return &Logger{
-		sinks:   sinks,
-		verbose: verbose,
-		prefix:  prefix,
-
+		sinks:      sinks,
+		verbose:    verbose,
+		prefix:     prefix,
+		identifier: identifier,
 		created:    time.Now(),
 		seq:        0,
 		executable: getExecutableName(),
@@ -62,7 +64,7 @@ func getExecutableName() string {
 
 // NewSimple(sinks...) is equivalent to New("", false, sinks...)
 func NewSimple(sinks ...Sink) *Logger {
-	return New("", false, sinks...)
+	return New("", "", false, sinks...)
 }
 
 var defaultLogger *Logger
