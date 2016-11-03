@@ -34,6 +34,7 @@ type Logger struct {
 	seq        uint64    // sequential number of log message, starting at 1
 	executable string    // executable name
 	identifier string    // Syslog Identifier
+	Facility   int       // Syslog Facility
 }
 
 // New creates a new Logger which logs to all the supplied sinks.  The prefix
@@ -50,6 +51,7 @@ func New(prefix, identifier string, verbose bool, sinks ...Sink) *Logger {
 		created:    time.Now(),
 		seq:        0,
 		executable: getExecutableName(),
+		Facility:   17,
 	}
 }
 

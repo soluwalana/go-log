@@ -39,7 +39,7 @@ func (logger *Logger) fieldValues() Fields {
 		"rtime":             time.Since(logger.created),  // relative time of log entry since started
 		"pid":               os.Getpid(),                 // process id
 		"executable":        logger.executable,           // executable filename
-		"SYSLOG_FACILITY":   17,                          // syslog facility
+		"SYSLOG_FACILITY":   logger.Facility,             // syslog facility
 		"SYSLOG_IDENTIFIER": logger.identifier,           // syslog id
 	}
 
